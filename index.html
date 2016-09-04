@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Code Highlight Plugin Demo</title>
+    <title>Admin UI - www.huuthuong.com</title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/libs/font-awesome.css">
+    <link type="text/css" rel="stylesheet" href="css/libs/materialize.css"  media="screen,projection"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.css"/>
+    <link type="text/css" rel="stylesheet" href="css/libs/materialNote.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/libs/codeMirror/codemirror.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/libs/codeMirror/monokai.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/main.css"  media="screen,projection"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+</head>
+<body>
+
+<header class="header-position">
+    <nav class="grey darken-4">
+        <div class="container">
+            <div class="row nav-wrapper">
+                <div class="col s9 m9 l9 ">
+                    <ul class="left">
+                        <li><a href="http://www.huuthuong.com/">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container container-body">
+
+    <div class="row">
+
+        <div class="col s12 row z-depth-2">
+            <div class="col s12 grey-text text-darken-4">
+                <i class="material-icons right tooltipped save"
+                    data-position="bottom" data-delay="50" data-tooltip="Save">save
+                </i>
+            </div>
+            <div class="input-field col s12">
+                <textarea class="content-editor" id="demo">
+                    <h5>MaterialNote Code Highlight Plugin:</h5>
+                    <p>Based on <a href="https://github.com/heyanlong/summernote-ext-highlight/">summernote-ext-highlight</a>
+                        and the <a href="http://www.web-forge.info/projects/materialNote">materialNote </a></p>
+                    <p>Add plugin mechanism of materialNote</p>
+                    <pre class="prettyprint"><code class="language-js">$.materialnote.addPlugin = function(plugin) {
+    // save plugin list
+    $.materialnote.plugins.push(plugin);
+    if (plugin.buttons) {
+      $.each(plugin.buttons, function(name, button) {
+        renderer.addButtonInfo(name, button);
+      });
+    }
+    if (plugin.dialogs) {
+      $.each(plugin.dialogs, function(name, dialog) {
+        renderer.addDialogInfo(name, dialog);
+      });
+    }
+    if (plugin.events) {
+      $.each(plugin.events, function(name, event) {
+        $.materialnote.pluginEvents[name] = event;
+      });
+    }
+    if (plugin.langs) {
+      $.each(plugin.langs, function(locale, lang) {
+        if ($.materialnote.lang[locale]) {
+          $.extend($.materialnote.lang[locale], lang);
+        }
+      });
+    }
+    if (plugin.options) {
+      $.extend($.materialnote.options, plugin.options);
+    }
+};</code></pre>
+                    <p>Structure of plugin
+                        <a href="https://github.com/thuongnht/materialnote-code-highlight-ext\js\libs\materialnote-code-highlight-ext.js">source</a></p>
+                    <pre class="prettyprint"><code class="language-js">\\ ...
+
+$.materialnote.addPlugin({
+    buttons: {
+            'highlight': function (lang, options) {
+                return tmpl.iconButton("developer_mode", {
+                    event: 'click',
+                    title: 'highlight',
+                    hide: false
+                });
+            }
+    },
+    dialogs: {
+            'highlight': function (lang, options) {
+                return createDialog(lang, options);
+            }
+    },
+    events: {
+            'click': function (layoutInfo, value, $target) {
+            }
+    },
+    langs: {},
+    options: {}
+});</code></pre>
+
+                    <h5>Setup:</h5>
+                    <p>Include <a href="http://materializecss.com/getting-started.html">Materialize css</a></p>
+                    <p>Include <a href="https://github.com/google/code-prettify">Google code-prettify</a></p>
+                    <p>Include <a href="https://github.com/Cerealkillerway/materialNote">CodeMirror (optional)</a></p>
+                    <p>Include <a href="http://fontawesome.io/">Font Awesome</a></p>
+                    <p>Include <a href="http://www.web-forge.info/projects/materialNote">materialNote </a></p>
+                    <p>Include <a href="https://github.com/thuongnht/materialnote-code-highlight-ext">material code-highlight plugin</a></p>
+
+                    <h5>Usage: (using jQuery for demo)</h5>
+                    <p>Configuration plugin</p>
+                    <pre class="prettyprint"><code class="language-js">var config = {
+    height: 300,
+    tabsize: 2,
+    minHeight: 100,
+    defaultBackColor: '#fff',
+    prettifyHtml: false,
+    toolbar: [
+    //    ...
+        ['highlight', ['highlight']],
+    ]};</code>
+                    </pre>
+                    <p>Call material note and plugin</p>
+                    <pre class="prettyprint"><code class="language-js">$('.[class_name]').materialnote(config);</code>
+                    </pre>
+                    <p>Preview</p>
+                    <pre class="prettyprint"><code class="language-js">$('.[preview_class_name]').html($.trim(($('.[class_name]').code()).replace(/(\r\n|\n|\r)/gm, "")));
+$('.[class_name]').code('');
+prettyPrint();</code>
+                    </pre>
+
+                    <h5>License: </h5>
+                    <p>This plugin is free, but the references to Materialize CSS, MaterialNote, ... shown by owner</p>
+                </textarea>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+            <h6><strong>Preview:</strong></h6><br>
+        </div>
+        <div class="col s12 show-content">
+        </div>
+    </div>
+
+</div>
+
+<footer class="page-footer footer-position grey darken-4">
+    <div class="footer-copyright">
+        <div class="container">
+            &copy; 2016 by Huu Thuong, Nguyen
+        </div>
+    </div>
+</footer>
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="js/libs/materialize.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.js"></script>
+<script type="text/javascript" src="js/libs/ckMaterializeOverrides.js"></script>
+<script type="text/javascript" src="js/libs/codeMirror/codemirror.js"></script
+<script type="text/javascript" src="js/libs/codeMirror/xml.js"></script>
+<script type="text/javascript" src="js/libs/materialNote.min.js"></script>
+<script type="text/javascript" src="js/libs/materialnote-code-highlight-ext.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+
+</body>
+</html>
